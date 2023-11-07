@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Manage Login</title>
+</head>
+<body>
+	<h2>ログインしてください</h2>
+	<form action="LoginServlet" method="post">
+		<p>USER NAME</p>
+		<input type="text" name="name">
+		
+		<p>PASSWORD</p>
+		<input type="password" id="textPassword"　name="pass">
+		<input type="button" id="buttonPassword" value="表示" onclick="pushHideButton();">
+    	<script language="javascript">
+      		function pushHideButton() {
+        	var txtPass = document.getElementById("textPassword");
+        	var btnPass = document.getElementById("buttonPassword");
+
+        	if (txtPass.type === "text") {
+          		txtPass.type = "password";
+          		btnPass.value = "表示";
+        	} else {
+          		txtPass.type = "text";
+          		btnPass.value = "非表示";
+        	}
+      	}
+    	</script>
+	
+		<button>login</button>
+	</form>
+	
+		<br></br>
+		<a href="http://localhost:8080/webExam2/signUp.html">アカウントがない方はこちらから新規作成してください</a>
+</body>
+</html>
