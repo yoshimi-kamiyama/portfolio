@@ -7,6 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import dto.ItemDto;
 import dto.UserDto;
 
@@ -57,7 +60,7 @@ public class ItemDao {
 	 * @throws SQLException
 	 */
 
-	public int getLoginInfo(String name, String pass) throws SQLException{
+	public int getLoginInfo(String name, String pass, HttpServletRequest request) throws SQLException{
 		sql = "select * from user where name = ? and password = ?";
 		ps = con.prepareStatement(sql);
 		ps.setString(1, name);
@@ -66,6 +69,13 @@ public class ItemDao {
 		try {
 			rs = ps.executeQuery();
 			rs.next();
+			// ログイン成功の場合
+			if (rs.getRow() > 0) {
+				// ユーザー名をセッションに保存
+				HttpSession session = request.getSession();
+				String userName = name; // ログインしたユーザー名
+				session.setAttribute("loggedInUser", userName);
+			}
 			return rs.getRow();
 		}finally {
 			ps.close();
@@ -81,7 +91,7 @@ public class ItemDao {
 	 */
 
 	public int signUp(UserDto dto) throws SQLException{
-		sql = "INSERT INTO user (name, password) VALUES (?, ?);";
+		sql = "INSERT INTO user (name, password) VALUES (?, ?)";
 		int n = 0;
 
 		try {
@@ -101,9 +111,14 @@ public class ItemDao {
 	 * @throws SQLException
 	 */
 
-	public ArrayList<ItemDto> getItemsAll() throws SQLException{
-		sql = "select * from item";
+	public ArrayList<ItemDto> getItemsAll(HttpServletRequest request) throws SQLException{
+		HttpSession session = request.getSession();
+	    String loggedInUser = (String) session.getAttribute("loggedInUser");
+		
+		sql = "select * from item where user_id = (select id from user where name = ?)";
 		ps = con.prepareStatement(sql);
+		ps.setString(1, loggedInUser);
+		
 		return search(ps);
 	}
 
@@ -113,11 +128,14 @@ public class ItemDao {
 	 * @return 該当データ
 	 * @throws SQLException
 	 */
-	public ItemDto getItem(int code) throws SQLException{
-
-		sql = "select * from item where code = ?";
+	public ItemDto getItem(int code, HttpServletRequest request) throws SQLException{
+		HttpSession session = request.getSession();
+	    String loggedInUser = (String) session.getAttribute("loggedInUser");
+	    
+		sql = "select * from item where code = ? and user_id = (select id from user where name = ?)";
 		ps = con.prepareStatement(sql);
 		ps.setInt(1, code);
+		ps.setString(2, loggedInUser);
 		return search(ps).get(0);
 	}
 
@@ -127,11 +145,14 @@ public class ItemDao {
 	 * @return 名前検索にヒットしたデータを持つリスト
 	 * @throws SQLException
 	 */
-	public ArrayList<ItemDto> getItemsFromName(String name) throws SQLException{
-
-		sql = "select * from item where name like ?";
+	public ArrayList<ItemDto> getItemsFromName(String name, HttpServletRequest request) throws SQLException{
+		HttpSession session = request.getSession();
+	    String loggedInUser = (String) session.getAttribute("loggedInUser");
+		
+		sql = "select * from item where name like ? and user_id = (select id from user where name = ?)";
 		ps = con.prepareStatement(sql);
 		ps.setString(1, "%" + name + "%");
+		ps.setString(2, loggedInUser);
 		return search(ps);
 	}
 
@@ -141,11 +162,14 @@ public class ItemDao {
 	 * @return カテゴリ検索にヒットしたデータを持つリスト
 	 * @throws SQLException
 	 */
-	public ArrayList<ItemDto> getItemsFromCategroy(String category) throws SQLException{
-
-		sql = "select * from item where category = ?";
+	public ArrayList<ItemDto> getItemsFromCategroy(String category, HttpServletRequest request) throws SQLException{
+		HttpSession session = request.getSession();
+	    String loggedInUser = (String) session.getAttribute("loggedInUser");
+		
+		sql = "select * from item where category = ? and user_id = (select id from user where name = ?)";
 		ps = con.prepareStatement(sql);
 		ps.setString(1, category);
+		ps.setString(2, loggedInUser);
 		return search(ps);
 	}
 
@@ -156,12 +180,15 @@ public class ItemDao {
 	 * @return 値段検索にヒットしたデータを持つリスト
 	 * @throws SQLException
 	 */
-	public ArrayList<ItemDto> getItemsFromPrice(int p1, int p2) throws SQLException{
-
-		sql = "select * from item where price between ? and ?";
+	public ArrayList<ItemDto> getItemsFromPrice(int p1, int p2, HttpServletRequest request) throws SQLException{
+		HttpSession session = request.getSession();
+	    String loggedInUser = (String) session.getAttribute("loggedInUser");
+		
+		sql = "select * from item where price between ? and ? and user_id = (select id from user where name = ?)";
 		ps = con.prepareStatement(sql);
 		ps.setInt(1, p1);
 		ps.setInt(2, p2);
+		ps.setString(3, loggedInUser);
 		return search(ps);
 	}
 
@@ -170,9 +197,13 @@ public class ItemDao {
 	 * @return 検索にヒットしたデータを持つリスト
 	 * @throws SQLException
 	 */
-	public ArrayList<ItemDto> getItemsMoreThan10000() throws SQLException{
-		sql = "select * from item where price >= 10000";
+	public ArrayList<ItemDto> getItemsMoreThan10000(HttpServletRequest request) throws SQLException{
+		HttpSession session = request.getSession();
+	    String loggedInUser = (String) session.getAttribute("loggedInUser");
+		
+		sql = "select * from item where price >= 10000 and user_id = (select id from user where name = ?)";
 		ps = con.prepareStatement(sql);
+		ps.setString(1, loggedInUser);
 		return search(ps);
 	}
 
@@ -212,16 +243,20 @@ public class ItemDao {
 	 * @throws SQLException
 	 */
 
-	public int insert(ItemDto dto) throws SQLException{
-		sql = "insert into item (code, name, category, price) values(?, ?, ?, ?)";
+	public int insert(ItemDto dto, HttpServletRequest request) throws SQLException{
+		HttpSession session = request.getSession();
+	    String loggedInUser = (String) session.getAttribute("loggedInUser");
+		
+		sql = "INSERT INTO item (code, name, category, price, user_id) VALUES (?, ?, ?, ?, (SELECT id FROM user WHERE name = ?))";
 		int n = 0;
-
+		
 		try {
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, dto.hashCode());
 			ps.setString(2, dto.getName());
 			ps.setString(3, dto.getCategory());
 			ps.setInt(4, dto.getPrice());
+			ps.setString(5, loggedInUser);
 			n = ps.executeUpdate();
 		}finally {
 			ps.close();

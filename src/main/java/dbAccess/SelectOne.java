@@ -21,7 +21,7 @@ public class SelectOne implements DBAccess {
 
 		try {
 			dao = new ItemDao();
-			ItemDto dto = dao.getItem(code);
+			ItemDto dto = dao.getItem(code, request);
 			request.setAttribute("item", dto);
 		}finally {
 			if(dao != null) dao.close();

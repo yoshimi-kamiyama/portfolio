@@ -24,7 +24,7 @@ public class SelectName implements DBAccess {
 		try {
 			if(name != null && !name.isEmpty() ) {
 				dao = new ItemDao();
-				ArrayList<ItemDto> list = dao.getItemsFromName(name);
+				ArrayList<ItemDto> list = dao.getItemsFromName(name, request);
 				if(list.size() > 0) {
 					request.setAttribute("list", list);
 				}else {

@@ -48,9 +48,9 @@ public class SelectPrice implements DBAccess {
 			dao = new ItemDao();
 			ArrayList<ItemDto> list = null;
 			if(flag) {
-				list = dao.getItemsMoreThan10000();
+				list = dao.getItemsMoreThan10000(request);
 			}else {
-				list = dao.getItemsFromPrice(p1, p2);
+				list = dao.getItemsFromPrice(p1, p2, request);
 			}
 			if(list.size() > 0) {
 				request.setAttribute("list", list);

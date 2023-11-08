@@ -22,7 +22,7 @@ public class SelectAll implements DBAccess {
 
 		try {
 			dao = new ItemDao();
-			ArrayList<ItemDto> list = dao.getItemsAll();
+			ArrayList<ItemDto> list = dao.getItemsAll(request);
 
 			if(list.size() > 0) {
 				request.setAttribute("list", list);

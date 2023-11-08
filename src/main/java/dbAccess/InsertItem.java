@@ -26,7 +26,7 @@ public class InsertItem implements DBAccess {
 
 				try {
 					dao = new ItemDao();
-					n = dao.insert(dto);
+					n = dao.insert(dto, request);
 						if(n > 0) {
 							request.setAttribute("message", "新規商品の登録が完了しました");
 						}else {

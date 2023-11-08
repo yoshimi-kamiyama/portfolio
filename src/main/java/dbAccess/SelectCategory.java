@@ -22,7 +22,7 @@ public class SelectCategory implements DBAccess {
 
 		try {
 			dao = new ItemDao();
-			ArrayList<ItemDto> list = dao.getItemsFromCategroy(category);
+			ArrayList<ItemDto> list = dao.getItemsFromCategroy(category, request);
 			if(list.size() > 0) {
 				request.setAttribute("list", list);
 			}else {

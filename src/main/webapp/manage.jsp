@@ -61,7 +61,7 @@
 	<c:if test="${list != null}">
 		<table border = "1">
 			<tr>
-				<th>商品id</th><th>商品コード</th><th>商品名</th><th>商品</th><th></th><th></th><th></th>
+				<th>商品id</th><th>商品コード</th><th>商品名</th><th>商品</th><th>価格</th><th></th><th></th>
 			</tr>
 			
 			<c:forEach var="item" items="${list}">
