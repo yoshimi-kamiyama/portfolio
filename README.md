@@ -32,11 +32,11 @@
   - 商品管理ページ"値段から検索"より、検索したい値段を選択し検索ボタンをクリックすることで、
   <br>登録されている値段で検索し表示することが可能
 <br></br>
-    -商品が表示された状態で、各商品の"変更"ボタンをクリックすることで、商品の詳細情報の変更が可能
+    - 商品が表示された状態で、各商品の"変更"ボタンをクリックすることで、商品の詳細情報の変更が可能
     <br><kbd><img src="https://github.com/yoshimi-kamiyama/portfolio/assets/150007846/a1fcea0e-601d-40c1-8213-a79fdfa992da" width="200"></kbd>
     <kbd><img src="https://github.com/yoshimi-kamiyama/portfolio/assets/150007846/6172c50c-f70c-4390-a34b-21bcfe33b313" width="200"></kbd>
 <br></br>
-    -商品が表示された状態で、各商品の"削除"ボタンをクリックすることで、商品の削除が可能
+    - 商品が表示された状態で、各商品の"削除"ボタンをクリックすることで、商品の削除が可能
     <br><kbd><img src="https://github.com/yoshimi-kamiyama/portfolio/assets/150007846/8a4c5597-03bd-44c0-8707-e1b2040a9529" width="200"></kbd>
     <kbd><img src="https://github.com/yoshimi-kamiyama/portfolio/assets/150007846/46a90204-d037-4d2b-9225-60cc7e92958e" width="200"></kbd>
   
