@@ -40,6 +40,9 @@
     <br><kbd><img src="https://github.com/yoshimi-kamiyama/portfolio/assets/150007846/8a4c5597-03bd-44c0-8707-e1b2040a9529" width="200"></kbd>
     <kbd><img src="https://github.com/yoshimi-kamiyama/portfolio/assets/150007846/46a90204-d037-4d2b-9225-60cc7e92958e" width="200"></kbd>
   
-# 意識した点
-* 
-* ユーザーごとに商品を管理できるようにしました。
+# 作成時気を付けた点
+* 後ほど見返した際にわかるようにコメントを積極的に記載しました。
+
+# 手をかけた点
+* ユーザーを多数登録できるため、ユーザーごとに商品を管理できるようにしました。
+
