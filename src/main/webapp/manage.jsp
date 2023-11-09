@@ -9,8 +9,17 @@
 <script src="validation.js"></script>
 </head>
 <body>
-<h2>商品管理ページ</h2>
-
+<h2 style="display:inline;">${loggedInUser}さんの商品管理ページ</h2>
+	<form action="logout.html" style="display:inline;">
+		<div align="right">
+			<button name="btn" value="insert">ログアウト</button>
+		</div>
+	</form>
+	
+	<c:if test="${error != null }">
+		<p>${error}</p>
+	</c:if>
+	
 	<c:if test="${message != null }">
 		<p>${message}</p>
 	</c:if>

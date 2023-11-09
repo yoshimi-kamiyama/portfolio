@@ -53,7 +53,7 @@ public class ItemDao {
 	}
 
 	/**
-	 * ログイン時のデータ照合
+	 * ログイン時のデータ照合、成功時にはセッションにusernameを保存
 	 * @param name 名前
 	 * @param pass　パスワード
 	 * @return ログイン成功時...1 <br>ログイン失敗時...0
